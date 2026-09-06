@@ -1,0 +1,5 @@
+# Build output
+/dist/
+/.angular/
+node_modules/
+*.log
