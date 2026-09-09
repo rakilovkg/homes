@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 
+import { HousingLocation } from '../housing-location/housing-location';
+
 @Component({
-  imports: [],
+  imports: [HousingLocation],
   selector: 'app-home',
   styleUrls: ['./home.css'],
   template: `
@@ -11,7 +13,10 @@ import { Component } from '@angular/core';
       <button class="primary" type="button">Search</button>
     </form>
   </section>
-  `,
+  <section class="results">
+    <app-housing-location />
+  </section>
+`,
 })
 export class Home {
 }
