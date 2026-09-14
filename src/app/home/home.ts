@@ -11,12 +11,12 @@ import { HousingLocationInfo } from '../housinglocation';
   template: `
   <section>
     <form>
-      <input type="text" placeholder="Filter by city" />
-      <button class="primary" type="button">Search</button>
+      <input type="text" placeholder="Filter by city" #filter />
+      <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
     </form>
   </section>
   <section class="results">
-    @for (housingLocation of this.housingLocationList; track $index) {
+    @for (housingLocation of this.filteredLocationList; track $index) {
       <app-housing-location [housingLocation]="housingLocation" />
     }
   </section>
@@ -24,9 +24,22 @@ import { HousingLocationInfo } from '../housinglocation';
 })
 export class Home {
   housingLocationList: HousingLocationInfo[] = [];
+  filteredLocationList: HousingLocationInfo[] = [];
   housing: Housing = inject(Housing);
 
   constructor() {
     this.housingLocationList = this.housing.getAllHousingLocation();
+    this.filteredLocationList = this.housingLocationList;
+  }
+
+  filterResults(text: string) {
+    if (!text) {
+      this.filteredLocationList = this.housingLocationList;
+      return;
+    }
+    
+    this.filteredLocationList = this.housingLocationList.filter(housingLocation =>
+      housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+    );
   }
 }
